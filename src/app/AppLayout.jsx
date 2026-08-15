@@ -1,14 +1,21 @@
 "use client";
-import React from "react";
-import { usePathname } from "next/navigation";
+import React, { useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import Sidebar from "@/app/sidebar/Sidebar";
 import Header from "@/app/navbar/Navbar";
-import "./dashboard/dashboard.css";
 import "./AppLayout.css";
 export default function AppLayout({ children }) {
   const pathname = usePathname();
   const isLoginPage = pathname === "/login";
-
+  const router = useRouter();
+  useEffect(() => {
+    const token = localStorage.getItem("access_token");
+    if (token) {
+      router.replace("/dashboard");
+    } else {
+      router.replace("/login");
+    }
+  }, [router]);
   if (isLoginPage) {
     return <>{children}</>;
   }

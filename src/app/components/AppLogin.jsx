@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import "./AppLogin.css";
 const AppLogin = () => {
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const [formData, setFormData] = useState({
@@ -19,9 +20,10 @@ const AppLogin = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-
+    setLoading(true);
     if (!formData.login || !formData.password) {
       console.log("Login yoki parol bo'sh bo'lishi mumkin emas!");
+      setLoading(false);
       return;
     }
 
@@ -68,8 +70,8 @@ const AppLogin = () => {
           value={formData.password}
           onChange={handleChange}
         />
-        <button type="submit" className="btn">
-          Login
+        <button type="submit" className="btn" disabled={loading}>
+          {loading ? "Loading..." : "Login"}
         </button>
       </form>
     </div>
