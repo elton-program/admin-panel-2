@@ -14,6 +14,10 @@ const Products = () => {
   const Clear = () => {
     setSearch("");
   };
+  const filtr = data?.data?.items?.filter((product) => {
+    const serch = search.toLowerCase().trim();
+    return product.name?.toLowerCase().includes(serch);
+  });
   return (
     <div className="product">
       <div className="block-p">
@@ -77,25 +81,19 @@ const Products = () => {
           <tbody>
             {isLoading ? (
               <tr>
-                <td colSpan="7">Loading...</td>
+                <td>Loading...</td>
               </tr>
-            ) : (
-              data?.data?.items?.map((product) => (
+            ) : filtr?.length > 0 ? (
+              filtr.map((product) => (
                 <tr key={product.id}>
                   <td>
                     <img src={product.image} alt={product.name} />
                   </td>
-
                   <td>{product.name}</td>
-
                   <td>{product.description}</td>
-
                   <td>{product.category?.name}</td>
-
                   <td>{product.price?.toLocaleString("de-DE")} som</td>
-
                   <td>{product.stock}</td>
-
                   <td>
                     <button className="btn-p">Edit</button>
                     <button className="btn-p">View</button>
@@ -103,6 +101,14 @@ const Products = () => {
                   </td>
                 </tr>
               ))
+            ) : (
+              <tr>
+                <td
+                  style={{ textAlign: "center"}}
+                >
+                  Malumot topilmadi
+                </td>
+              </tr>
             )}
           </tbody>
         </table>
