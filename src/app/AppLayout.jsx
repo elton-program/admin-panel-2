@@ -10,12 +10,13 @@ export default function AppLayout({ children }) {
   const router = useRouter();
   useEffect(() => {
     const token = localStorage.getItem("access_token");
-    if (token) {
-      router.replace("/dashboard");
-    } else {
+    if (!token && !isLoginPage) {
       router.replace("/login");
+    } else if (token && isLoginPage) {
+      router.replace("/dashboard");
     }
-  }, [router]);
+  }, [pathname, isLoginPage, router]);
+
   if (isLoginPage) {
     return <>{children}</>;
   }

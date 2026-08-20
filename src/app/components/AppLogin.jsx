@@ -1,11 +1,12 @@
 "use client";
+import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import "./AppLogin.css";
 const AppLogin = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-
+  const [messege, setMessege] = useState("");
   const [formData, setFormData] = useState({
     login: "",
     password: "",
@@ -18,41 +19,54 @@ const AppLogin = () => {
     });
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setMessege("");
+
     if (!formData.login || !formData.password) {
-      console.log("Login yoki parol bo'sh bo'lishi mumkin emas!");
-      setLoading(false);
+      setMessege("Login yoki parol bo'sh bo'lishi mumkin emas!");
+      toast.error("Login yoki parol bo'sh bo'lishi mumkin emas!");
       return;
     }
-
-    fetch("https://backend.magnateshop.uz/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        login: formData.login,
-        password: formData.password,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        const token = data?.data?.accessToken;
-        if (token) {
-          localStorage.setItem("access_token", token);
-          router.replace("/dashboard");
-          router.refresh();
-        }
-      })
-      .catch((error) => {
-        console.error(error);
+    setLoading(true);
+    try {
+      const res = await fetch("https://backend.magnateshop.uz/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          login: formData.login,
+          password: formData.password,
+        }),
       });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        const mes = data?.message || data?.error || "Login yoki parol xato!";
+        toast.error(mes);
+      }
+
+      const token = data?.data?.accessToken;
+      if (token) {
+        localStorage.setItem("access_token", token);
+        window.location.href = "/dashboard";
+      } else {
+        console.log("something");
+      }
+    } catch (error) {
+      setMessege(error.message);
+      toast.error(messege);
+      localStorage.removeItem("access_token");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="login">
+      <Toaster position="top-right" reverseOrder={false} />
       <form className="form" onSubmit={handleLogin}>
         <input
           type="text"
@@ -70,7 +84,7 @@ const AppLogin = () => {
           value={formData.password}
           onChange={handleChange}
         />
-        <button type="submit" className="btn" disabled={loading}>
+        <button type="submit" className="btn">
           {loading ? "Loading..." : "Login"}
         </button>
       </form>

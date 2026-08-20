@@ -9,6 +9,14 @@
 .div-p::-webkit-scrollbar {
   display: none;
 }
+.pagination{
+  display: flex;
+  font-size: 25px;
+  align-items: center;
+  gap: 10px;
+  justify-content: end;
+  margin: 30px 0;
+}
 .block-p {
   box-shadow: 0px 0px 20px -6px #6b7280;
   width: 96%;

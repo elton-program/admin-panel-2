@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 const Sidebar = () => {
   const router = useRouter();
   const LogOut = async () => {
+    localStorage.removeItem("access_token");
     localStorage.removeItem("token");
     router.replace("/login");
   };
