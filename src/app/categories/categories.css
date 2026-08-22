@@ -1,21 +1,11 @@
-.product {
+.categories {
   width: 100%;
   display: flex;
   align-items: center;
   overflow-x: hidden;
   flex-direction: column;
 }
-.div-p::-webkit-scrollbar {
-  display: none;
-}
-.pagination{
-  display: flex;
-  font-size: 25px;
-  align-items: center;
-  gap: 10px;
-  justify-content: end;
-  margin: 30px 0;
-}
+
 .block-p {
   box-shadow: 0px 0px 20px -6px #6b7280;
   width: 96%;
@@ -41,45 +31,17 @@
   align-items: center;
   gap: 20px;
 }
-.btn-p {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 150px;
-  height: 45px;
-  border-radius: 10px;
-  font-size: 18px;
-  background-color: #121212;
-  color: white;
-  transition: all ease 0.3s;
-}
-.btn-p:hover {
-  background-color: #3d3d3d;
-}
-.search-wrapper {
-  position: relative;
+.disp {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 20px;
 }
-
-.search-wrapper input {
-  width: 230px;
-  padding: 0 45px 0 15px;
-  height: 50px;
-  border: 3px solid #a1a1a1;
-  border-radius: 10px;
+.a {
+  width: 100%;
+  justify-content: space-between;
 }
-
-.search-icon,
-.clear-icon {
-  position: absolute;
-  right: 190px;
-  color: #a1a1a1;
-  width: 25px;
-  height: 25px;
-}
-.div-p {
+.div-c {
   width: 96%;
   margin-top: 25px;
   overflow-x: auto;
@@ -87,6 +49,9 @@
   border-radius: 16px;
   border: 1px solid #e5e7eb;
   background-color: #ffffff;
+}
+.div-c::-webkit-scrollbar {
+  display: none;
 }
 
 .table-p {
@@ -137,4 +102,27 @@
   font-size: 13px;
   border-radius: 6px;
   border: none;
+}
+.btn-p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 45px;
+  border-radius: 10px;
+  font-size: 18px;
+  background-color: #121212;
+  color: white;
+  transition: all ease 0.3s;
+}
+.btn-p:hover {
+  background-color: #3d3d3d;
+}
+.btn-c{
+  background-color: #121212;
+  font-weight: 600;
+  transition: all ease 0.3s;
+  border-radius: 45%;
+  width: 90px;
+  height: 40px;
 }

@@ -28,11 +28,6 @@ const Products = () => {
   };
   const items = products?.data?.items || [];
   const meta = products?.data?.meta;
-
-  // const filtr = products?.data?.items?.filter((product) => {
-  //   const serch = search.toLowerCase().trim();
-  //   return product.name?.toLowerCase().includes(serch);
-  // });
   return (
     <div className="product">
       <div className="block-p">
@@ -165,4 +160,3 @@ const Products = () => {
 };
 
 export default Products;
-//pagination kere va edit add  categories bosa yam zor boladi

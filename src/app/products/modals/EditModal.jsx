@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useProducts } from "@/hooks/useProducts";
 import { useQuery } from "@tanstack/react-query";
 import { GetCat } from "@/sorovlar/GetCat";
-import "./modal.css"
+import "./modal.css";
 const EditModal = ({ Edit, close }) => {
   const { editProduct } = useProducts();
   const { data } = useQuery({
@@ -73,11 +73,16 @@ const EditModal = ({ Edit, close }) => {
             required
           >
             <option value="">Category</option>
-            {data?.data?.map((cat) => (
-              <option key={cat.id} value={cat.id}>
-                {cat.name}
-              </option>
-            ))}
+            {data?.data?.map((cat) => {
+              if (cat.isActive) {
+                return (
+                  <option key={cat.id} value={cat.id}>
+                    {cat.name}
+                  </option>
+                );
+              }
+              return null;
+            })}
           </select>
           <input
             className="inp-a"
