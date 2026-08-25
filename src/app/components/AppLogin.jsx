@@ -90,7 +90,7 @@ const AppLogin = () => {
           value={formData.password}
           onChange={handleChange}
         />
-        <button type="submit" className="btn">
+        <button style={{color:"white"}} type="submit" className="btn">
           {loading ? "Loading..." : "Login"}
         </button>
       </form>

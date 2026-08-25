@@ -101,7 +101,7 @@ const page = () => {
                         <button
                           className="btn-p"
                           style={{opacity:"0.3"}}
-                          title="Siz buni qila olmaydi!"
+                          title="Siz buni qila olmaysiz!"
                           disabled={true}
                         >
                           Edit
@@ -118,7 +118,7 @@ const page = () => {
                         <button
                           className="btn-p"
                           style={{opacity:"0.3"}}
-                          title={"Siz buni qila olmaydi!"}
+                          title={"Siz buni qila olmaysiz!"}
                           disabled={true}
                         >
                           Delete
