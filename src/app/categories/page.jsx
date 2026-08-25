@@ -6,15 +6,14 @@ import CategoryAdd from "./modal/CategoryAdd";
 import CategoryEdit from "./modal/CategoryEdit";
 import toast, { Toaster } from "react-hot-toast";
 const page = () => {
-  const { category, deleteCategory, isLoading, editCategory, toggleStatus } =
-    useCategory();
+  const { category, deleteCategory, isLoading, toggleStatus } = useCategory();
   const [add, setAdd] = useState(false);
   const [edit, setEdit] = useState(null);
   console.log(category?.data.items);
   const handleDelete = (id) => {
     deleteCategory(id, {
       onSuccess: (res) => {
-        toast.success(res?.message || "Kategoriya muvaffaqiyatli o'chirildi!");
+        toast.success(res?.message);
       },
       onError: (err) => {
         toast.error("Avtomobillari bor Categoriyani ochira olmaysiz!");

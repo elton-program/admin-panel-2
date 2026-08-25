@@ -1,11 +1,9 @@
 "use client";
 import toast, { Toaster } from "react-hot-toast";
-import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import "./AppLogin.css";
 const AppLogin = () => {
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
   const [messege, setMessege] = useState("");
   const [formData, setFormData] = useState({
     login: "",
@@ -24,8 +22,8 @@ const AppLogin = () => {
     setMessege("");
 
     if (!formData.login || !formData.password) {
-      setMessege("Login yoki parol bo'sh bo'lishi mumkin emas!");
-      toast.error("Login yoki parol bo'sh bo'lishi mumkin emas!");
+      setMessege("Login yoki parol bosh bo'lishi mumkin emas!");
+      toast.error("Login yoki parol bosh bo'lishi mumkin emas!");
       return;
     }
     setLoading(true);
@@ -46,21 +44,29 @@ const AppLogin = () => {
       if (!res.ok) {
         const mes = data?.message || data?.error || "Login yoki parol xato!";
         toast.error(mes);
+        return;
       }
+      console.log(data);
 
       const token = data?.data?.accessToken;
-      if (token) {
+      const adminData = data?.data?.admin;
+
+      if (token && adminData) {
+        const isSuper =
+          adminData.fullName?.toLowerCase().includes("bosh admin") ||
+          adminData.login === "admin";
+        const user = {
+          ...adminData,
+          isSuperAdmin: isSuper,
+        };
         localStorage.setItem("access_token", token);
+        localStorage.setItem("user_info", JSON.stringify(user));
         window.location.href = "/dashboard";
-      } else {
-        console.log("something");
       }
     } catch (error) {
       setMessege(error.message);
       toast.error(messege);
       localStorage.removeItem("access_token");
-    } finally {
-      setLoading(false);
     }
   };
 

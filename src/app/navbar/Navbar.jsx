@@ -1,13 +1,21 @@
-import React from 'react'
-import './navbar.css'
-import { usePathname } from 'next/navigation';
+import React from "react";
+import "./navbar.css";
+import { usePathname } from "next/navigation";
 const Navbar = () => {
   const pathname = usePathname();
   return (
-    <div className='navbar'>
-      <h1>{pathname == "/products"? ("Products"): pathname=="/dashboard"? ("Dashboard"):("Categories")}</h1>
+    <div className="navbar">
+      <h1>
+        {pathname == "/products"
+          ? "Products"
+          : pathname == "/dashboard"
+            ? "Dashboard"
+            : pathname == "/admin"
+              ? "Admin"
+              : "Categories"}
+      </h1>
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
