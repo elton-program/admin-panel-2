@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import "@/app/products/modals/modal.css";
 import { useAdmin } from "@/hooks/useAdmin";
+import toast, { Toaster } from "react-hot-toast";
 const AddModal = ({ Add, close }) => {
   const { addAdmin } = useAdmin();
   const [formData, setFormData] = useState({
@@ -16,18 +17,29 @@ const AddModal = ({ Add, close }) => {
     e.preventDefault();
     addAdmin(formData, {
       onSuccess: () => {
+        toast.success("successfull", {
+          duration: 5000,
+        });
         setFormData({
           login: "",
           fullName: "",
           password: "",
         });
-        close();
+        setTimeout(() => {
+          close();
+        }, 1500);
+      },
+      onError: (err) => {
+        const data = err?.response?.data;
+        const errors = data?.errors || [data?.message || "Xatolik yuz berdi!"];
+        toast.error(errors);
       },
     });
   };
 
   return (
     <div className="add">
+      <Toaster position="top-right" reverseOrder={false} />
       <div className="modal-a">
         <form className="form-a" onSubmit={handleSubmit}>
           <input
@@ -35,7 +47,9 @@ const AddModal = ({ Add, close }) => {
             type="text"
             placeholder="name"
             value={formData.login}
-            onChange={(e) => setFormData({ ...formData, login: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, login: e.target.value })
+            }
             required
           />
           <input

@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import "@/app/products/modals/modal.css";
 import { useAdmin } from "@/hooks/useAdmin";
+import toast, { Toaster } from "react-hot-toast";
 const EditModal = ({ Edit, close }) => {
   const { editAdmin } = useAdmin();
   const [formData, setFormData] = useState({
@@ -27,11 +28,19 @@ const EditModal = ({ Edit, close }) => {
       login: formData.login,
       fullName: formData.fullName,
     };
+    if (formData.password.trim() !== "") {
+      payload.password = formData.password;
+    }
     editAdmin(
       { id: Edit.id, data: payload },
       {
         onSuccess: () => {
           close();
+        },
+        onError: (err) => {
+          const data = err?.response?.data;
+          const errors = data?.errors || [data?.message || "Xatolik yuz berdi!"];
+          toast.error(errors)
         },
       },
     );
@@ -39,6 +48,7 @@ const EditModal = ({ Edit, close }) => {
 
   return (
     <div className="add">
+      <Toaster position="top-right" reverseOrder={false} />
       <div className="modal-a">
         <form className="form-a" onSubmit={handleSubmit}>
           <input
@@ -46,7 +56,9 @@ const EditModal = ({ Edit, close }) => {
             type="text"
             placeholder="login"
             value={formData.login}
-            onChange={(e) => setFormData({ ...formData, login: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, login: e.target.value })
+            }
             required
           />
           <input

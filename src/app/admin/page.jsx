@@ -6,6 +6,7 @@ import { useAdmin } from "@/hooks/useAdmin";
 import AddModal from "./modal/AddAdmin";
 import EditModal from "./modal/EditAdmin";
 import ChangeModal from "./modal/ChangeAdmin";
+import DeleteModal from "./modal/DeleteModal";
 
 const page = () => {
   const { admin, isLoading, deleteAdmin } = useAdmin();
@@ -13,6 +14,7 @@ const page = () => {
   const [edit, setEdit] = useState(null);
   const [change, setChange] = useState(null);
   const [oddiyAd, setOddiyAd] = useState(null);
+  const [selectedId, setSelectedId] = useState(null);
   const handleDelete = (id) => {
     deleteAdmin(id, {
       onSuccess: (res) => {
@@ -59,7 +61,11 @@ const page = () => {
               Add +
             </button>
           ) : (
-            <button className="btn-p" style={{width:"170px"}} onClick={() => setChange(true)}>
+            <button
+              className="btn-p"
+              style={{ width: "170px" }}
+              onClick={() => setChange(true)}
+            >
               Change Password
             </button>
           )}
@@ -100,7 +106,7 @@ const page = () => {
                       ) : (
                         <button
                           className="btn-p"
-                          style={{opacity:"0.3"}}
+                          style={{ opacity: "0.3" }}
                           title="Siz buni qila olmaysiz!"
                           disabled={true}
                         >
@@ -110,14 +116,16 @@ const page = () => {
                       {SuperAd && !isSelf ? (
                         <button
                           className="btn-p"
-                          onClick={() => handleDelete(item.id)}
+                          onClick={() => {
+                            setSelectedId(item.id);
+                          }}
                         >
                           Delete
                         </button>
                       ) : (
                         <button
                           className="btn-p"
-                          style={{opacity:"0.3"}}
+                          style={{ opacity: "0.3" }}
                           title={"Siz buni qila olmaysiz!"}
                           disabled={true}
                         >
@@ -139,6 +147,11 @@ const page = () => {
         </table>
         <AddModal Add={add} close={() => setAdd(false)} />
         <EditModal Edit={edit} close={() => setEdit(null)} />
+        <DeleteModal
+          isOpen={Boolean(selectedId)}
+          onConfirm={() => handleDelete(selectedId)}
+          close={() => setSelectedId(null)}
+        />
         <ChangeModal Change={change} close={() => setChange(null)} />
       </div>
     </div>
@@ -146,3 +159,4 @@ const page = () => {
 };
 
 export default page;
+//tayyor faqat yangi modul qoldi

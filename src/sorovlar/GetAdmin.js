@@ -5,8 +5,11 @@ export const GetAdmin = async () => {
       Authorization: `Bearer ${token}`,
     },
   });
-  return response.json();
+  const data = await response.json();
+  if (!response.ok) throw { response: { data } };
+  return data;
 };
+
 export const DeleteAdmin = async (id) => {
   const token = localStorage.getItem("access_token");
   const res = await fetch(`https://backend.magnateshop.uz/api/admins/${id}`, {
@@ -16,11 +19,11 @@ export const DeleteAdmin = async (id) => {
       "Content-Type": "application/json",
     },
   });
-  if (!res.ok) {
-    throw new Error(data?.message || "O'chirishda xatolik yuz berdi");
-  }
-  return res.json();
+  const data = await res.json();
+  if (!res.ok) throw { response: { data } };
+  return data;
 };
+
 export const AddAdmin = async (data) => {
   const token = localStorage.getItem("access_token");
   const res = await fetch(`https://backend.magnateshop.uz/api/admins`, {
@@ -31,8 +34,11 @@ export const AddAdmin = async (data) => {
     },
     body: JSON.stringify(data),
   });
-  return res.json();
+  const resData = await res.json();
+  if (!res.ok) throw { response: { data: resData } }; 
+  return resData;
 };
+
 export const EditAdmin = async ({ id, data }) => {
   const token = localStorage.getItem("access_token");
   const res = await fetch(`https://backend.magnateshop.uz/api/admins/${id}`, {
@@ -43,8 +49,15 @@ export const EditAdmin = async ({ id, data }) => {
     },
     body: JSON.stringify(data),
   });
-  return res.json();
+  const resData = await res.json();
+  
+  if (!res.ok) {
+    throw { response: { data: resData } };
+  }
+  
+  return resData;
 };
+
 export const ChangeAdmin = async ({ currentPassword, newPassword }) => {
   const token = localStorage.getItem("access_token");
   const res = await fetch(
@@ -59,7 +72,9 @@ export const ChangeAdmin = async ({ currentPassword, newPassword }) => {
         currentPassword,
         newPassword,
       }),
-    },
+    }
   );
-  return res.json();
+  const data = await res.json();
+  if (!res.ok) throw { response: { data } };
+  return data;
 };

@@ -1,22 +1,21 @@
 "use client";
 import React, { useState } from "react";
-import "./categories.css";
-import { useCategory } from "@/hooks/useCategory";
-import CategoryAdd from "./modal/CategoryAdd";
-import CategoryEdit from "./modal/CategoryEdit";
+import "./salonlar.css";
+import { useSalon } from "@/hooks/useSalon";
 import toast, { Toaster } from "react-hot-toast";
 const page = () => {
-  const { category, deleteCategory, isLoading, toggleStatus } = useCategory();
+  const { salon, deleteSalon, isLoading, toggleStatus } = useSalon();
   const [add, setAdd] = useState(false);
   const [edit, setEdit] = useState(null);
-  console.log(category?.data.items);
+  console.log(salon);
+  
   const handleDelete = (id) => {
-    deleteCategory(id, {
+    deleteSalon(id, {
       onSuccess: (res) => {
         toast.success(res?.message);
       },
       onError: (err) => {
-        toast.error("Avtomobillari bor Categoriyani ochira olmaysiz!");
+        toast.error(err?.message);
       },
     });
   };
@@ -35,7 +34,7 @@ const page = () => {
     );
   };
   return (
-    <div className="categories">
+    <div className="salon">
       <Toaster position="top-right" reverseOrder={false} />
       <div className="block-p">
         <div className="box2-p a">
@@ -47,10 +46,10 @@ const page = () => {
                 viewBox="0 0 24 24"
                 fill="currentColor"
               >
-                <path d="M11.9998 1L6 11H18L11.9998 1ZM11.9998 4.8873L14.4676 9H9.53232L11.9998 4.8873ZM6.75 20C5.23122 20 4 18.7688 4 17.25C4 15.7312 5.23122 14.5 6.75 14.5C8.26878 14.5 9.5 15.7312 9.5 17.25C9.5 18.7688 8.26878 20 6.75 20ZM6.75 22C9.37335 22 11.5 19.8734 11.5 17.25C11.5 14.6266 9.37335 12.5 6.75 12.5C4.12665 12.5 2 14.6266 2 17.25C2 19.8734 4.12665 22 6.75 22ZM15 15.5V19.5H19V15.5H15ZM13 21.5V13.5H21V21.5H13Z"></path>
+                <path d="M3 19V5.70046C3 5.27995 3.26307 4.90437 3.65826 4.76067L13.3291 1.24398C13.5886 1.14961 13.8755 1.28349 13.9699 1.54301C13.9898 1.59778 14 1.65561 14 1.71388V6.6667L20.3162 8.77211C20.7246 8.90822 21 9.29036 21 9.72079V19H23V21H1V19H3ZM5 19H12V3.85543L5 6.40089V19ZM19 19V10.4416L14 8.77488V19H19Z"></path>
               </svg>
             </div>
-            <p className="p1">Categories </p>
+            <p className="p1">Pickup Points</p>
           </div>
 
           <button className="btn-p" onClick={() => setAdd(true)}>
@@ -62,9 +61,13 @@ const page = () => {
         <table className="table-p">
           <thead>
             <tr>
+              <th>Image</th>
               <th>Name</th>
-              <th>Description</th>
-              <th>Products-Count</th>
+              <th>Products</th>
+              <th>City</th>
+              <th>Address</th>
+              <th>Phone</th>
+              <th>Hours</th>
               <th>Status</th>
               <th>Action</th>
             </tr>
@@ -74,29 +77,35 @@ const page = () => {
               <tr>
                 <td>Loading...</td>
               </tr>
-            ) : category?.data?.items?.length > 0 ? (
-              category?.data?.items?.map((category) => (
-                <tr key={category.id}>
-                  <td>{category.name}</td>
-                  <td>{category.description}</td>
-                  <td>{category.productsCount}</td>
+            ) : salon?.data?.items?.length > 0 ? (
+              salon?.data?.items?.map((salon) => (
+                <tr key={salon.id}>
+                  <td>
+                    <img src={salon.imageUrl} alt={salon.name} />
+                  </td>
+                  <td>{salon.name}</td>
+                  <td>{salon.productsCount}</td>
+                  <td>{salon.city}</td>
+                  <td>{salon.address}</td>
+                  <td>{salon.phone}</td>
+                  <td>{salon.opensAt}-{salon.closesAt}</td>
                   <td>
                     <button
                       className="btn-c"
-                      style={{ color: category.isActive ? "green" : "red" }}
-                      onClick={() => toggle(category)}
+                      style={{ color: salon.isActive ? "green" : "red" }}
+                      onClick={() => toggle(salon)}
                     >
-                      {category.isActive ? "Active" : "InActive"}
+                      {salon.isActive ? "Active" : "InActive"}
                     </button>
                   </td>
                   <td>
-                    <button className="btn-p" onClick={() => setEdit(category)}>
+                    <button className="btn-p" onClick={() => setEdit(salon)}>
                       Edit
                     </button>
                     <button
                       className="btn-p"
                       onClick={() => {
-                        handleDelete(category.id);
+                        handleDelete(salon.id);
                       }}
                     >
                       Delete
@@ -111,8 +120,8 @@ const page = () => {
             )}
           </tbody>
         </table>
-        <CategoryAdd Add={add} close={() => setAdd(false)} />
-        <CategoryEdit Edit={edit} close={() => setEdit(null)} />
+        {/* <SalonAdd Add={add} close={() => setAdd(false)} />
+        <SalonEdit Edit={edit} close={() => setEdit(null)} /> */}
       </div>
     </div>
   );
