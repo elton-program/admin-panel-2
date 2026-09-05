@@ -15,7 +15,10 @@ export const GetProducts = async ({ page = 1, limit = 10, search = "" } = {}) =>
       },
     }
   );
-
+  if (!response.ok) {
+    const data = await response.json();
+    throw new Error(data?.message);
+  }
   return response.json();
 };
 export const DeleteProducts = async (id) => {

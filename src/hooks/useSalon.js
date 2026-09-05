@@ -37,11 +37,11 @@ export const useSalon = () => {
   },
 });
   return {
-    salon: salon.data,
-    isLoading: salon.isLoading,
-    toggleStatus: toggleMut.mutate,
-    deleteSalon: mut.mutate,
-    addSalon: add.mutate,
-    editSalon: edit.mutate,
-  };
+  salon: salon.data,
+  isLoading: salon.isLoading,
+  toggleStatus: toggleMut.mutate, 
+  deleteSalon: mut.mutate,        
+  addSalon: add.mutate,           
+  editSalon: edit.mutate,         
+};
 };

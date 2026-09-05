@@ -12,7 +12,9 @@ const Navbar = () => {
             ? "Dashboard"
             : pathname == "/admin"
               ? "Admin"
-              : "Categories"}
+              : pathname == "/categories"
+                ? "Categories"
+                : "Salonlar"}
       </h1>
     </div>
   );

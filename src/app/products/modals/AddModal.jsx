@@ -4,15 +4,21 @@ import { GetCat } from "@/sorovlar/GetCat";
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import "./modal.css"
+import { GetSalon } from "@/sorovlar/GetSalon";
 const AddModal = ({ Add, close }) => {
   const { addProduct } = useProducts();
   const { data } = useQuery({
     queryKey: ["cat"],
     queryFn: GetCat,
   });
+  const { data: salon } = useQuery({
+    queryKey: ["salon"],
+    queryFn: GetSalon,
+  });
   const [formData, setFormData] = useState({
     name: "",
     categoryId: "",
+    pickupPointId: "",
     price: "",
     stock: "",
     image: "",
@@ -20,7 +26,6 @@ const AddModal = ({ Add, close }) => {
   });
 
   if (!Add) return null;
-
   const handleSubmit = (e) => {
     e.preventDefault();
     addProduct(formData, {
@@ -28,6 +33,7 @@ const AddModal = ({ Add, close }) => {
         setFormData({
           name: "",
           categoryId: "",
+          pickupPointId: "",
           price: "",
           stock: "",
           image: "",
@@ -35,6 +41,9 @@ const AddModal = ({ Add, close }) => {
         });
         close();
       },
+      onError: (error) => {
+        console.error("Error adding product:", error);
+      }
     });
   };
 
@@ -57,8 +66,22 @@ const AddModal = ({ Add, close }) => {
             }
             required
           >
-            <option value="">Category</option>
+            <option value="">Category ....</option>
             {data?.data?.map((cat) => (
+              <option key={cat.id} value={cat.id}>
+                {cat.name}
+              </option>
+            ))}
+          </select>
+          <select
+            value={formData.pickupPointId}
+            onChange={(e) =>
+              setFormData({ ...formData, pickupPointId: e.target.value })
+            }
+            required
+          >
+            <option value="">Pickup Point ....</option>
+            {salon?.data?.items.map((cat) => (
               <option key={cat.id} value={cat.id}>
                 {cat.name}
               </option>

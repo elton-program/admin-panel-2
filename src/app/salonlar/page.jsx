@@ -3,12 +3,14 @@ import React, { useState } from "react";
 import "./salonlar.css";
 import { useSalon } from "@/hooks/useSalon";
 import toast, { Toaster } from "react-hot-toast";
+import AddSalon from "./modal/AddSalon";
+import EditSalon from "./modal/EditSalon";
+
 const page = () => {
   const { salon, deleteSalon, isLoading, toggleStatus } = useSalon();
   const [add, setAdd] = useState(false);
   const [edit, setEdit] = useState(null);
   console.log(salon);
-  
   const handleDelete = (id) => {
     deleteSalon(id, {
       onSuccess: (res) => {
@@ -88,7 +90,9 @@ const page = () => {
                   <td>{salon.city}</td>
                   <td>{salon.address}</td>
                   <td>{salon.phone}</td>
-                  <td>{salon.opensAt}-{salon.closesAt}</td>
+                  <td>
+                    {salon.opensAt}-{salon.closesAt}
+                  </td>
                   <td>
                     <button
                       className="btn-c"
@@ -120,8 +124,8 @@ const page = () => {
             )}
           </tbody>
         </table>
-        {/* <SalonAdd Add={add} close={() => setAdd(false)} />
-        <SalonEdit Edit={edit} close={() => setEdit(null)} /> */}
+        <AddSalon Add={add} close={() => setAdd(false)} />
+        {/* <EditSalon Edit={edit} close={() => setEdit(null)} /> */}
       </div>
     </div>
   );

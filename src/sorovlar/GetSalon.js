@@ -57,7 +57,7 @@ export const AddSalon = async (data) => {
   const resData = await res.json();
 
   if (!res.ok) {
-    throw new Error(resData?.message || "Qo'shishda xatolik");
+    throw new Error(resData?.message || "Qoshishda xatolik");
   }
 
   return resData;

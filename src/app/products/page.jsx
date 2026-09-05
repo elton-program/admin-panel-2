@@ -88,6 +88,7 @@ const Products = () => {
               <th>Title</th>
               <th>Description</th>
               <th>Category</th>
+              <th>Pickup Point</th>
               <th>Price</th>
               <th>Stock</th>
               <th>Actions</th>
@@ -107,6 +108,7 @@ const Products = () => {
                   <td>{product.name}</td>
                   <td>{product.description}</td>
                   <td>{product.category?.name}</td>
+                  <td>{product.pickupPoint?.name}</td>
                   <td>{product.price?.toLocaleString("de-DE")} som</td>
                   <td>{product.stock}</td>
                   <td>

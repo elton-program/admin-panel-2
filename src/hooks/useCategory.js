@@ -15,19 +15,19 @@ export const useCategory = () => {
   const mut = useMutation({
     mutationFn: DeleteCategory,
     onSuccess: () => {
-      client.invalidateQueries(["category"]);
+      client.invalidateQueries({ queryKey: ["category"] });
     },
   });
   const add = useMutation({
     mutationFn: AddCategory,
     onSuccess: () => {
-      client.invalidateQueries(["category"]);
+      client.invalidateQueries({ queryKey: ["category"] });
     },
   });
   const edit = useMutation({
     mutationFn: EditCategory,
     onSuccess: () => {
-      client.invalidateQueries(["category"]);
+      client.invalidateQueries({ queryKey: ["category"] });
     },
   });
   const toggleMut = useMutation({

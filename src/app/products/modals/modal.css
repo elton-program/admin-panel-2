@@ -1,9 +1,22 @@
+.add::-webkit-scrollbar {
+  display: none;
+}
+.add,
+.modal-a {
+  scrollbar-width: none;
+}
+.add::-webkit-scrollbar,
+.modal-a::-webkit-scrollbar {
+  display: none;
+}
 .add {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
+  box-sizing: border-box;
+  overflow-y: auto;
   background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(8px);
   display: flex;
@@ -16,8 +29,11 @@
   border: 2px solid #000000;
   border-radius: 12px;
   padding: 24px;
+  box-sizing: border-box;
   width: 100%;
   max-width: 420px;
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
 }
 .form-a {
@@ -41,9 +57,9 @@
   border-color: #000000;
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
 }
-.div-a{
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    gap: 10px;
+.div-a {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10px;
 }

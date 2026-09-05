@@ -4,15 +4,21 @@ import { useProducts } from "@/hooks/useProducts";
 import { useQuery } from "@tanstack/react-query";
 import { GetCat } from "@/sorovlar/GetCat";
 import "./modal.css";
+import { GetSalon } from "@/sorovlar/GetSalon";
 const EditModal = ({ Edit, close }) => {
   const { editProduct } = useProducts();
   const { data } = useQuery({
     queryKey: ["cat"],
     queryFn: GetCat,
   });
+  const { data: salon } = useQuery({
+      queryKey: ["salon"],
+      queryFn: GetSalon,
+    });
   const [formData, setFormData] = useState({
     name: "",
     categoryId: "",
+    pickupPointId: "",
     price: "",
     stock: "",
     image: "",
@@ -23,6 +29,7 @@ const EditModal = ({ Edit, close }) => {
       setFormData({
         name: Edit.name || "",
         categoryId: Edit.categoryId || Edit.category?.id || "",
+        pickupPointId: Edit.pickupPointId || "",
         price: Edit.price || "",
         stock: Edit.stock || "",
         image: Edit.image || "",
@@ -40,6 +47,7 @@ const EditModal = ({ Edit, close }) => {
       price: Number(formData.price),
       stock: Number(formData.stock),
       categoryId: Number(formData.categoryId),
+      pickupPointId: Number(formData.pickupPointId),
       image: formData.image,
       description: formData.description,
     };
@@ -72,8 +80,27 @@ const EditModal = ({ Edit, close }) => {
             }
             required
           >
-            <option value="">Category</option>
+            <option value="">Category ....</option>
             {data?.data?.map((cat) => {
+              if (cat.isActive) {
+                return (
+                  <option key={cat.id} value={cat.id}>
+                    {cat.name}
+                  </option>
+                );
+              }
+              return null;
+            })}
+          </select>
+          <select
+            value={formData.pickupPointId}
+            onChange={(e) =>
+              setFormData({ ...formData, pickupPointId: e.target.value })
+            }
+            required
+          >
+            <option value="">Pickup Point ....</option>
+            {salon?.data?.items.map((cat) => {
               if (cat.isActive) {
                 return (
                   <option key={cat.id} value={cat.id}>

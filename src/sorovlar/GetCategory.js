@@ -1,7 +1,7 @@
 export const GetCategory = async () => {
   const token = localStorage.getItem("access_token");
   const response = await fetch(
-    `https://backend.magnateshop.uz/api/categories`,
+    `https://backend.magnateshop.uz/api/categories?limit=90`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -22,14 +22,15 @@ export const DeleteCategory = async (id) => {
       },
     },
   );
+  const data = await res.json();
   if (!res.ok) {
     throw new Error(data?.message || "O'chirishda xatolik yuz berdi");
   }
-  return res.json();
+  return data;
 };
 export const AddCategory = async (data) => {
   const token = localStorage.getItem("access_token");
-  const res = await fetch(`https://backend.magnateshop.uz/api/categories`, {
+  const res = await fetch(`https://backend.magnateshop.uz/api/categories?limit=90`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
