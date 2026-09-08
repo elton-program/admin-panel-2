@@ -5,10 +5,12 @@ import { useSalon } from "@/hooks/useSalon";
 import toast, { Toaster } from "react-hot-toast";
 import AddSalon from "./modal/AddSalon";
 import EditSalon from "./modal/EditSalon";
+import ViewSalon from "./modal/ViewSalon";
 
 const page = () => {
   const { salon, deleteSalon, isLoading, toggleStatus } = useSalon();
   const [add, setAdd] = useState(false);
+  const [view, setView] = useState(false);
   const [edit, setEdit] = useState(null);
   console.log(salon);
   const handleDelete = (id) => {
@@ -109,6 +111,14 @@ const page = () => {
                     <button
                       className="btn-p"
                       onClick={() => {
+                        setView(salon);
+                      }}
+                    >
+                      View
+                    </button>
+                    <button
+                      className="btn-p"
+                      onClick={() => {
                         handleDelete(salon.id);
                       }}
                     >
@@ -125,7 +135,8 @@ const page = () => {
           </tbody>
         </table>
         <AddSalon Add={add} close={() => setAdd(false)} />
-        {/* <EditSalon Edit={edit} close={() => setEdit(null)} /> */}
+        <EditSalon edit={edit} close={() => setEdit(null)} />
+        <ViewSalon view={view} close={() => setView(null)} />
       </div>
     </div>
   );
